@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const menuItems = [
-  { name: 'Accueil', path: '/' },
+  { name: 'Home', path: '/' },
   { name: 'Expertise', path: '/expertise' },
+  { name: 'Properties', path: '/properties' },
 ];
 
 export default function DropdownMenu() {

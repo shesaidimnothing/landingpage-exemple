@@ -34,10 +34,10 @@ const widgetData: WidgetData[] = [
 export default function WidgetContainer() {
   return (
     <div className="fixed inset-0 pt-20 px-6">
-      <div className="h-full w-full flex justify-between">
+      <div className="h-full w-full flex flex-col md:flex-row justify-between">
         {/* Widget en bas à gauche */}
         <motion.div 
-          className="self-end mb-6"
+          className="self-end mb-6 md:mb-0"
           initial={{ x: -1000 }}
           animate={{ x: 0 }}
           transition={{ 
@@ -73,7 +73,7 @@ export default function WidgetContainer() {
           </motion.div>
 
           <motion.div 
-            className="-ml-64"
+            className="-ml-32 md:-ml-64"
             initial={{ x: 1000 }}
             animate={{ x: 0 }}
             transition={{ 
@@ -102,6 +102,7 @@ export default function WidgetContainer() {
             <Widget 
               title={widgetData[2].title}
               description={widgetData[2].description}
+              link="/properties"
             />
           </motion.div>
         </div>

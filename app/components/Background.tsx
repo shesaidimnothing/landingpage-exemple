@@ -3,10 +3,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const backgroundImages = [
-  "https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80",
-  "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?q=80",
-  "https://images.unsplash.com/photo-1464146072230-91cabc968266?q=80",
-  "https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80",
+    "https://www.alpineanswers.co.uk/media/W1siZiIsIjIwMjEvMDkvMDMvMTIvNTMvMTYvOWU1MTFjMzAtZDQ4ZS00NmFjLWJmMGYtM2M3ODM0MDdmMzQzL0NoYWxldF9aZXJtYXR0X1BlYWsgKDEpLmpwZyJdXQ/99571304a61eccca/Chalet_Zermatt_Peak%20%281%29.jpg",
+    "https://images5.alphacoders.com/702/702181.jpg",
+    "https://doctor-property.co.th/wp-content/uploads/2023/02/doctor-property.co_.th-583285-new-4-bedroom-seaview-2-pools-villa-laem-yai-koh-samui-for-sale-doctor-property-42.jpeg",
+    "https://news.airbnb.com/wp-content/uploads/sites/4/2023/03/06_Airbnb_Villa_CostaRica.jpeg",
+    "https://i.pinimg.com/originals/14/13/81/1413811b9dc0034b7098831efeb4daf7.jpg",
+
 ];
 
 export default function Background() {
@@ -14,34 +16,29 @@ export default function Background() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Précharger l'image sélectionnée
-    const preloadImage = (url: string): Promise<void> => {
-      return new Promise((resolve, reject) => {
-        const img = new window.Image();
-        img.src = url;
-        img.onload = () => resolve();
-        img.onerror = (e: Event) => reject(e);
-      });
-    };
-
-    const loadRandomImage = async () => {
+    const preloadImages = async () => {
       setIsLoading(true);
-      const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-      const imageUrl = backgroundImages[randomIndex];
-      
+      const promises = backgroundImages.map(url => {
+        return new Promise<void>((resolve, reject) => {
+          const img = new window.Image();
+          img.src = url;
+          img.onload = () => resolve();
+          img.onerror = (e: Event) => reject(e);
+        });
+      });
+
       try {
-        await preloadImage(imageUrl);
-        setSelectedImage(imageUrl);
+        await Promise.all(promises);
+        const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+        setSelectedImage(backgroundImages[randomIndex]);
       } catch (e) {
-        if (e instanceof Error) {
-          console.error('Erreur de chargement de l\'image:', e.message);
-        }
+        console.error('Erreur de chargement de l\'image:', e);
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadRandomImage();
+    preloadImages();
   }, []);
 
   if (!selectedImage) {
@@ -61,7 +58,6 @@ export default function Background() {
         }`}
         priority
         unoptimized
-        onLoadingComplete={() => setIsLoading(false)}
       />
       <div className="absolute inset-0 bg-black/20" />
     </div>
