@@ -7,7 +7,6 @@ const backgroundImages = [
   "https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?q=80",
   "https://images.unsplash.com/photo-1464146072230-91cabc968266?q=80",
   "https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80",
-  "https://images.unsplash.com/photo-1520608760-eff2c44a89e3?q=80"
 ];
 
 export default function Background() {
